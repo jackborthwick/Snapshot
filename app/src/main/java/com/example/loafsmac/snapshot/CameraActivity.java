@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.util.*;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,6 +21,10 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class CameraActivity extends ActionBarActivity {
 
@@ -46,15 +50,32 @@ public class CameraActivity extends ActionBarActivity {
                 Bundle extras = data.getExtras();
                 Bitmap bitmap = (Bitmap) extras.get("data");
                 imageView.setImageBitmap(bitmap);
-                MediaStore.Images.Media.insertImage(CameraActivity.this.getContentResolver(), bitmap,
-                        "photo" + ".jpg", "photo" + ".jpg");
-            } catch (Exception e) {
+//                File photo = new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
+//                MediaStore.Images.Media.insertImage(CameraActivity.this.getContentResolver(), bitmap,
+//                        "Pic" + ".jpg", "photo");
+                saveBitmap(bitmap);
+            } catch (Error e) {
 
                 Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT)
                         .show();
                 Log.e("Camera", e.toString());
             }
         }
+    }
+
+    private boolean saveBitmap( Bitmap bitmapInput){
+        try {
+            FileOutputStream stream = new FileOutputStream("/sdcard/test.png");
+            bitmapInput.compress(Bitmap.CompressFormat.PNG, 40, stream);
+            return true;
+
+        }
+        catch(FileNotFoundException e){
+            System.out.print(e);
+            return false;
+        }
+/* Write bitmap to file using JPEG or PNG and 80% quality hint for JPEG. */
+
     }
 
     @Override
