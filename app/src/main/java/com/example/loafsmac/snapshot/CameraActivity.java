@@ -46,6 +46,8 @@ public class CameraActivity extends ActionBarActivity {
                 Bundle extras = data.getExtras();
                 Bitmap bitmap = (Bitmap) extras.get("data");
                 imageView.setImageBitmap(bitmap);
+                MediaStore.Images.Media.insertImage(CameraActivity.this.getContentResolver(), bitmap,
+                        "photo" + ".jpg", "photo" + ".jpg");
             } catch (Exception e) {
 
                 Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT)
