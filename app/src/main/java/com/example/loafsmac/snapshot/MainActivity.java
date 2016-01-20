@@ -46,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
         // DATABASE STUFF
         myDatabase = openOrCreateDatabase("picDiaryDB", Context.MODE_PRIVATE, null);
         myDatabase.execSQL("CREATE TABLE IF NOT EXISTS moments" +
-                "(image BLOB, time DATETIME, text TEXT, address TEXT);");
+                "(image BLOB, time TEXT, text TEXT, address TEXT);");
         myDatabase.execSQL("insert into moments(text) VALUES(\"I LOVE CATS\");");
         String testDB = getTableAsString(myDatabase, "moments ");
         System.out.print(testDB);
